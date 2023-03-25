@@ -100,7 +100,7 @@ class HomeViewModel extends BaseViewModel {
   String _localTime = "${DateTime.now().hour}:${DateTime.now().minute}";
   String get localTime => _localTime;
 
-  String _localDetails =
+  final String _localDetails =
       "(Local time: ${DateTime.now().timeZoneName}, ${DateTime.now().timeZoneOffset.inHours})";
   String get localDetails => _localDetails;
 
