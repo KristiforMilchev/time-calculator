@@ -28,24 +28,27 @@ class CustomTextField extends StatelessWidget {
   //Border Specific properties
   Color borderRegularColor;
   Color borderFocusedColor;
+  Function onChanged;
 
-  CustomTextField(
-      {super.key,
-      this.height = 56,
-      this.borderRadius = 10,
-      this.radialRadius = 25,
-      this.cursorColor = const Color.fromRGBO(255, 255, 255, 0.2),
-      this.textColor = ThemeStyles.fontPrimary,
-      this.textFontFamily = "Loto",
-      this.fontSize = 18,
-      this.letterSpacing = 1.26,
-      this.fontWeight = FontWeight.w400,
-      this.textAlign = TextAlign.center,
-      required this.floatingLabel,
-      this.labelColor = const Color.fromRGBO(255, 255, 255, 0.72),
-      this.labelAlignment = FloatingLabelAlignment.center,
-      this.borderRegularColor = const Color.fromRGBO(255, 255, 255, 0.5),
-      this.borderFocusedColor = const Color.fromRGBO(255, 215, 214, 0.1)});
+  CustomTextField({
+    super.key,
+    this.height = 56,
+    this.borderRadius = 10,
+    this.radialRadius = 25,
+    this.cursorColor = const Color.fromRGBO(255, 255, 255, 0.2),
+    this.textColor = ThemeStyles.fontPrimary,
+    this.textFontFamily = "Loto",
+    this.fontSize = 18,
+    this.letterSpacing = 1.26,
+    this.fontWeight = FontWeight.w400,
+    this.textAlign = TextAlign.center,
+    required this.floatingLabel,
+    this.labelColor = const Color.fromRGBO(255, 255, 255, 0.72),
+    this.labelAlignment = FloatingLabelAlignment.center,
+    this.borderRegularColor = const Color.fromRGBO(255, 255, 255, 0.5),
+    this.borderFocusedColor = const Color.fromRGBO(255, 215, 214, 0.1),
+    required this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +59,7 @@ class CustomTextField extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
       ),
       child: TextField(
+        onChanged: (value) => onChanged.call(value),
         inputFormatters: [
           MaskedInputFormatter(
             '##:##',
