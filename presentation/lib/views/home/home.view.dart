@@ -89,14 +89,25 @@ class HomeView extends StatelessWidget {
                     label: "${viewModel.timeSelected} UTC",
                     onChanged: (value) => viewModel.onTimeChanged(value),
                   ),
-                  const Text(
-                    "08:25",
-                    style: TextStyle(
+                  Text(
+                    viewModel.localTime,
+                    style: const TextStyle(
                       fontFamily: "Loto",
                       fontWeight: FontWeight.bold,
                       fontSize: 48,
                       color: ThemeStyles.fontPrimary,
                       letterSpacing: 6,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    viewModel.localDetails,
+                    style: const TextStyle(
+                      fontFamily: "Loto",
+                      fontWeight: FontWeight.w100,
+                      fontSize: 14,
+                      color: ThemeStyles.fontPrimary,
+                      letterSpacing: 4,
                     ),
                     textAlign: TextAlign.center,
                   ),

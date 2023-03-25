@@ -4,13 +4,13 @@ import 'package:stacked/stacked.dart';
 
 class HomeViewModel extends BaseViewModel {
   GetIt getIt = GetIt.I;
-  int _hours = 11;
-  int _minutes = 24;
+  int _hours = 0;
+  int _minutes = 0;
 
   double _timeSelected = 1;
   double get timeSelected => _timeSelected;
   late ITimeConverter _timeConverter;
-  String _emptyString = "--";
+  final String _emptyString = "--";
   String get emptyString => _emptyString;
 
   String? _gtmTime;
@@ -97,12 +97,20 @@ class HomeViewModel extends BaseViewModel {
   String? _betTime;
   String? get betTime => _betTime;
 
+  String _localTime = "${DateTime.now().hour}:${DateTime.now().minute}";
+  String get localTime => _localTime;
+
+  String _localDetails =
+      "(Local time: ${DateTime.now().timeZoneName}, ${DateTime.now().timeZoneOffset.inHours})";
+  String get localDetails => _localDetails;
+
   ready() {
     _timeConverter = getIt.get<ITimeConverter>();
   }
 
   onTimeChanged(double value) {
     _timeSelected = value;
+    calculateUtcToLocal();
     calulateDifference();
   }
 
@@ -150,5 +158,14 @@ class HomeViewModel extends BaseViewModel {
     if (timeData.length > 1) {
       _minutes = timeData[1].isEmpty ? 0 : int.parse(timeData[1]);
     }
+
+    calculateUtcToLocal();
+
+    calulateDifference();
+  }
+
+  void calculateUtcToLocal() {
+    _localTime =
+        "${_hours + ((timeSelected) + DateTime.now().timeZoneOffset.inHours)}:${_minutes}";
   }
 }
