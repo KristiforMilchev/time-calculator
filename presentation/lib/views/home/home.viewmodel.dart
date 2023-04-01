@@ -1,9 +1,12 @@
 import 'package:get_it/get_it.dart';
+import 'package:infrastructure/interfaces/ibserver.dart';
 import 'package:infrastructure/interfaces/itime_converter.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeViewModel extends BaseViewModel {
   GetIt getIt = GetIt.I;
+  late IObserver _observer;
+
   int _hours = 0;
   int _minutes = 0;
 
@@ -106,6 +109,8 @@ class HomeViewModel extends BaseViewModel {
 
   ready() {
     _timeConverter = getIt.get<ITimeConverter>();
+    _observer = getIt.get<IObserver>();
+    _observer.getSubscriber("time-changed").fn.call(_localTime);
   }
 
   onTimeChanged(double value) {
@@ -167,5 +172,7 @@ class HomeViewModel extends BaseViewModel {
   void calculateUtcToLocal() {
     _localTime =
         "${_hours + ((timeSelected) + DateTime.now().timeZoneOffset.inHours)}:${_minutes}";
+
+    _observer.getSubscriber("time-changed").fn.call(_localTime);
   }
 }

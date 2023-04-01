@@ -1,6 +1,7 @@
 import 'package:domain/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/components/custom_text_field/custom_text_field.dart';
+import 'package:presentation/components/time_prenter/time_presenter_view.dart';
 import 'package:presentation/components/timezone_label/timezone_label.dart';
 import 'package:stacked/stacked.dart';
 
@@ -89,17 +90,7 @@ class HomeView extends StatelessWidget {
                     label: "${viewModel.timeSelected} UTC",
                     onChanged: (value) => viewModel.onTimeChanged(value),
                   ),
-                  Text(
-                    viewModel.localTime,
-                    style: const TextStyle(
-                      fontFamily: "Loto",
-                      fontWeight: FontWeight.bold,
-                      fontSize: 48,
-                      color: ThemeStyles.fontPrimary,
-                      letterSpacing: 6,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
+                  const TimePresenter(),
                   Text(
                     viewModel.localDetails,
                     style: const TextStyle(
