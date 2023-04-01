@@ -1,8 +1,8 @@
-abstract import 'package:domain/models/observable.dart';
 import 'package:flutter/material.dart';
 
-abstract class IObserver{
+abstract class IObserver {
   void subscribe(String name, Function fn);
-  Observable getSubscriber(String name);
+  Function? getSubscriber(String name);
+  notifyObservers(String name, {dynamic data});
   void dispose(String name);
 }

@@ -40,7 +40,7 @@ class TimezoneLabel extends StatelessWidget {
                     height: 6,
                   ),
                   Text(
-                    "viewModel.time",
+                    viewModel.conveterdTime,
                     style: TextStyle(
                       fontFamily: "Loto",
                       fontWeight: FontWeight.w200,

@@ -1,3 +1,4 @@
+import 'package:domain/models/time_changed_notifier.dart';
 import 'package:domain/models/time_zone.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -45,11 +46,19 @@ class HomeViewModel extends BaseViewModel {
 
   onTimeChanged(double value) {
     _timeSelected = value;
+    notifyListeners();
     calculateUtcToLocal();
   }
 
   void calulateDifference() {
-    _observer.getSubscriber("time-updated")?.call(_hours, _minutes);
+    _observer.notifyObservers(
+      "time-updated",
+      data: TimeChangedNotifier(
+        hours: _hours,
+        minutes: _minutes,
+        offset: _timeSelected,
+      ),
+    );
   }
 
   onTimeSet(String time) {
@@ -103,17 +112,22 @@ class HomeViewModel extends BaseViewModel {
       }
     }
     calculateUtcToLocal();
-
-    calulateDifference();
   }
 
   void calculateUtcToLocal() {
-    _localTime =
-        "${_hours + ((timeSelected) + DateTime.now().timeZoneOffset.inHours)}:${_minutes}";
+    DateTime dt = DateTime.now();
+    var digits = _timeSelected.toString().split(".");
+
+    dt = dt.add(Duration(
+        hours: int.parse(digits.first), minutes: int.parse(digits.last)));
+
+    _localTime = "${dt.hour}:${dt.minute}";
 
     var sub = _observer.getSubscriber("time-changed");
     if (sub != null) {
       sub.call(_localTime);
     }
+
+    calulateDifference();
   }
 }

@@ -1,3 +1,4 @@
+import 'package:domain/models/time_changed_notifier.dart';
 import 'package:get_it/get_it.dart';
 import 'package:infrastructure/interfaces/ibserver.dart';
 import 'package:infrastructure/interfaces/itime_converter.dart';
@@ -9,6 +10,9 @@ class TimezoneLabelViewModel extends BaseViewModel {
   late ITimeConverter _converter;
 
   double _offset = 0;
+  String _convertedTime = "--";
+  String get conveterdTime => _convertedTime;
+
   ready(double offset) {
     _observer = getIt.get<IObserver>();
     _converter = getIt.get<ITimeConverter>();
@@ -17,7 +21,12 @@ class TimezoneLabelViewModel extends BaseViewModel {
     _observer.subscribe("time-updated", onTimeChanged);
   }
 
-  onTimeChanged(int hours, int minutes) {
-    _converter.convert(hours, minutes, _offset);
+  onTimeChanged(TimeChangedNotifier notifier) {
+    _convertedTime = _converter.convert(
+      notifier.hours,
+      notifier.minutes,
+      (notifier.offset + (_offset)),
+    );
+    notifyListeners();
   }
 }

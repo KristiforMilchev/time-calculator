@@ -1,5 +1,4 @@
 import 'package:domain/models/observable.dart';
-import 'package:flutter/material.dart';
 import 'package:infrastructure/interfaces/ibserver.dart';
 
 class Observer implements IObserver {
@@ -15,8 +14,16 @@ class Observer implements IObserver {
   }
 
   @override
-  Observable getSubscriber(String name) {
-    return _observables.firstWhere((element) => element.name == name);
+  Function? getSubscriber(String name) {
+    try {
+      return _observables
+          .firstWhere(
+            (element) => element.name == name,
+          )
+          .fn;
+    } catch (ex) {
+      return null;
+    }
   }
 
   @override
@@ -25,5 +32,12 @@ class Observer implements IObserver {
     if (exist != null) {
       _observables.remove(exist);
     }
+  }
+
+  @override
+  notifyObservers(String name, {data}) {
+    _observables.where((element) => element.name == name).forEach((element) {
+      element.fn.call(data);
+    });
   }
 }
