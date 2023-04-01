@@ -6,7 +6,7 @@ class TimePresenterViewModel extends BaseViewModel {
   GetIt getIt = GetIt.instance;
   late IObserver _observer;
 
-  late String _localTime;
+  late String _localTime = "--";
   String get localTime => _localTime;
 
   ready() {

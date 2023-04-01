@@ -1,7 +1,6 @@
 import 'package:domain/styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
-import 'package:presentation/components/custom_text_field/time_text_input_formatter.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 //ignore: must_be_immutable
 class CustomTextField extends StatelessWidget {
@@ -29,26 +28,26 @@ class CustomTextField extends StatelessWidget {
   Color borderRegularColor;
   Color borderFocusedColor;
   Function onChanged;
-
-  CustomTextField({
-    super.key,
-    this.height = 56,
-    this.borderRadius = 10,
-    this.radialRadius = 25,
-    this.cursorColor = const Color.fromRGBO(255, 255, 255, 0.2),
-    this.textColor = ThemeStyles.fontPrimary,
-    this.textFontFamily = "Loto",
-    this.fontSize = 18,
-    this.letterSpacing = 1.26,
-    this.fontWeight = FontWeight.w400,
-    this.textAlign = TextAlign.center,
-    required this.floatingLabel,
-    this.labelColor = const Color.fromRGBO(255, 255, 255, 0.72),
-    this.labelAlignment = FloatingLabelAlignment.center,
-    this.borderRegularColor = const Color.fromRGBO(255, 255, 255, 0.5),
-    this.borderFocusedColor = const Color.fromRGBO(255, 215, 214, 0.1),
-    required this.onChanged,
-  });
+  TextEditingController controller;
+  CustomTextField(
+      {super.key,
+      this.height = 56,
+      this.borderRadius = 10,
+      this.radialRadius = 25,
+      this.cursorColor = const Color.fromRGBO(255, 255, 255, 0.2),
+      this.textColor = ThemeStyles.fontPrimary,
+      this.textFontFamily = "Loto",
+      this.fontSize = 18,
+      this.letterSpacing = 1.26,
+      this.fontWeight = FontWeight.w400,
+      this.textAlign = TextAlign.center,
+      required this.floatingLabel,
+      this.labelColor = const Color.fromRGBO(255, 255, 255, 0.72),
+      this.labelAlignment = FloatingLabelAlignment.center,
+      this.borderRegularColor = const Color.fromRGBO(255, 255, 255, 0.5),
+      this.borderFocusedColor = const Color.fromRGBO(255, 215, 214, 0.1),
+      required this.onChanged,
+      required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -59,12 +58,10 @@ class CustomTextField extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
       ),
       child: TextField(
+        controller: controller,
         onChanged: (value) => onChanged.call(value),
         inputFormatters: [
-          MaskedInputFormatter(
-            '##:##',
-            allowedCharMatcher: RegExp(r'^[0-9:]+$'),
-          )
+          MaskTextInputFormatter(mask: '##:##', filter: {"#": RegExp(r'[0-9]')})
         ],
         textAlign: TextAlign.center,
         cursorColor: cursorColor,

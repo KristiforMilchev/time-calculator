@@ -1,6 +1,7 @@
 import 'package:domain/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/components/custom_text_field/custom_text_field.dart';
+import 'package:presentation/components/grid_row_builder/grid_row_builder.view.dart';
 import 'package:presentation/components/time_prenter/time_presenter_view.dart';
 import 'package:presentation/components/timezone_label/timezone_label.dart';
 import 'package:stacked/stacked.dart';
@@ -71,6 +72,7 @@ class HomeView extends StatelessWidget {
                   SizedBox(
                     width: 300,
                     child: CustomTextField(
+                      controller: viewModel.lookupTimeController,
                       floatingLabel: "Lookup Time",
                       onChanged: viewModel.onTimeSet,
                     ),
@@ -102,177 +104,19 @@ class HomeView extends StatelessWidget {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(26),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TimezoneLabel(
-                                time:
-                                    viewModel.gtmTime ?? viewModel.emptyString,
-                                zoneLabel: "GTM"),
-                            TimezoneLabel(
-                                time:
-                                    viewModel.etcTime ?? viewModel.emptyString,
-                                zoneLabel: "ECT"),
-                            TimezoneLabel(
-                                time:
-                                    viewModel.eetTime ?? viewModel.emptyString,
-                                zoneLabel: "EET"),
-                            TimezoneLabel(
-                                time:
-                                    viewModel.metTime ?? viewModel.emptyString,
-                                zoneLabel: "MET"),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TimezoneLabel(
-                                time:
-                                    viewModel.netTime ?? viewModel.emptyString,
-                                zoneLabel: "NET"),
-                            TimezoneLabel(
-                                time:
-                                    viewModel.pltTime ?? viewModel.emptyString,
-                                zoneLabel: "PLT"),
-                            TimezoneLabel(
-                                time:
-                                    viewModel.istTime ?? viewModel.emptyString,
-                                zoneLabel: "IST"),
-                            TimezoneLabel(
-                                time:
-                                    viewModel.bstTime ?? viewModel.emptyString,
-                                zoneLabel: "BST"),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TimezoneLabel(
-                                time:
-                                    viewModel.vstTime ?? viewModel.emptyString,
-                                zoneLabel: "VST"),
-                            TimezoneLabel(
-                                time:
-                                    viewModel.cttTime ?? viewModel.emptyString,
-                                zoneLabel: "CTT"),
-                            TimezoneLabel(
-                                time:
-                                    viewModel.jstTime ?? viewModel.emptyString,
-                                zoneLabel: "JST"),
-                            TimezoneLabel(
-                                time:
-                                    viewModel.actTime ?? viewModel.emptyString,
-                                zoneLabel: "ACT"),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TimezoneLabel(
-                                time:
-                                    viewModel.aetTime ?? viewModel.emptyString,
-                                zoneLabel: "AET"),
-                            TimezoneLabel(
-                                time:
-                                    viewModel.sstTime ?? viewModel.emptyString,
-                                zoneLabel: "SST"),
-                            TimezoneLabel(
-                                time:
-                                    viewModel.nstTime ?? viewModel.emptyString,
-                                zoneLabel: "NST"),
-                            TimezoneLabel(
-                                time:
-                                    viewModel.mitTime ?? viewModel.emptyString,
-                                zoneLabel: "MIT"),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TimezoneLabel(
-                                time:
-                                    viewModel.hstTime ?? viewModel.emptyString,
-                                zoneLabel: "HST"),
-                            TimezoneLabel(
-                                time:
-                                    viewModel.astTime ?? viewModel.emptyString,
-                                zoneLabel: "AST"),
-                            TimezoneLabel(
-                                time:
-                                    viewModel.pstTime ?? viewModel.emptyString,
-                                zoneLabel: "PST"),
-                            TimezoneLabel(
-                                time:
-                                    viewModel.pntTime ?? viewModel.emptyString,
-                                zoneLabel: "PNT"),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TimezoneLabel(
-                                time:
-                                    viewModel.mstTime ?? viewModel.emptyString,
-                                zoneLabel: "MST"),
-                            TimezoneLabel(
-                                time:
-                                    viewModel.cstTime ?? viewModel.emptyString,
-                                zoneLabel: "CST"),
-                            TimezoneLabel(
-                                time:
-                                    viewModel.estTime ?? viewModel.emptyString,
-                                zoneLabel: "EST"),
-                            TimezoneLabel(
-                                time:
-                                    viewModel.ietTime ?? viewModel.emptyString,
-                                zoneLabel: "IET"),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TimezoneLabel(
-                                time:
-                                    viewModel.prtTime ?? viewModel.emptyString,
-                                zoneLabel: "PRT"),
-                            TimezoneLabel(
-                                time:
-                                    viewModel.cntTime ?? viewModel.emptyString,
-                                zoneLabel: "CNT"),
-                            TimezoneLabel(
-                                time:
-                                    viewModel.agtTime ?? viewModel.emptyString,
-                                zoneLabel: "AGT"),
-                            TimezoneLabel(
-                                time:
-                                    viewModel.betTime ?? viewModel.emptyString,
-                                zoneLabel: "BET"),
-                          ],
-                        ),
-                      ],
-                    ),
+                  Expanded(
+                    child: Container(
+                        padding: const EdgeInsets.all(26),
+                        child: GridRowBuilder(
+                          children: viewModel.timeZones
+                              .map(
+                                (e) => TimezoneLabel(
+                                  zoneLabel: e.name,
+                                  offset: e.offset,
+                                ),
+                              )
+                              .toList(),
+                        )),
                   ),
                 ],
               ),
